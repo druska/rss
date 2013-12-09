@@ -52,6 +52,22 @@ func Fetch(url string) (*Feed, error) {
 }
 
 // Feed is the top-level structure.
+type CompanyInfo struct {
+	Address []struct {
+		Type    string `xml:"attr,type" gorethink:",omitempty"`
+		City    string `xml:"city" gorethink:",omitempty"`
+		State   string `xml:"state" gorethink:",omitempty"`
+		Street  string `xml:"street" gorethink:",omitempty"`
+		Street1 string `xml:"street1" gorethink:",omitempty"`
+		Street2 string `xml:"street2" gorethink:",omitempty"`
+		Zip     string `xml:"zip" gorethink:",omitempty"`
+		Phone   string `xml:"phone" gorethink:",omitempty"`
+	} `xml:"addresses>address"`
+	SIC            string `xml:"assigned-sic" gorethink:",omitempty"`
+	SICDescription string `xml:"assigned-sic-desc" gorethink:",omitempty"`
+	ConformedName  string `xml:"conformed-name" gorethink:",omitempty"`
+	StateLocation  string `xml:"state-location" gorethink:",omitempty"`
+}
 type Feed struct {
 	Nickname    string
 	Title       string
@@ -63,6 +79,7 @@ type Feed struct {
 	ItemMap     map[string]struct{}
 	Refresh     time.Time
 	Unread      uint32
+	CompanyInfo CompanyInfo
 }
 
 // Update fetches any new items and updates f.

@@ -20,6 +20,7 @@ func parseAtom(data []byte, read *db) (*Feed, error) {
 	out.Title = feed.Title
 	out.Description = feed.Description
 	out.Link = feed.Link.Href
+	out.CompanyInfo = feed.CompanyInfo
 	out.Image = feed.Image.Image()
 	out.Refresh = time.Now().Add(10 * time.Minute)
 
@@ -70,13 +71,14 @@ func parseAtom(data []byte, read *db) (*Feed, error) {
 }
 
 type atomFeed struct {
-	XMLName     xml.Name   `xml:"feed"`
-	Title       string     `xml:"title"`
-	Description string     `xml:"subtitle"`
-	Link        atomLink   `xml:"link"`
-	Image       atomImage  `xml:"image"`
-	Items       []atomItem `xml:"entry"`
-	Updated     string     `xml:"updated"`
+	XMLName     xml.Name    `xml:"feed"`
+	Title       string      `xml:"title"`
+	Description string      `xml:"subtitle"`
+	Link        atomLink    `xml:"link"`
+	Image       atomImage   `xml:"image"`
+	Items       []atomItem  `xml:"entry"`
+	Updated     string      `xml:"updated"`
+	CompanyInfo CompanyInfo `xml:"company-info"`
 }
 
 type atomItem struct {
